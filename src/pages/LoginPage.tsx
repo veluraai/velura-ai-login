@@ -110,9 +110,6 @@ const LoginPage = () => {
 
         {/* Badge showcase */}
         <div className="relative z-10 mb-6 sm:mb-8 flex flex-col items-center">
-          <p className="text-muted-foreground text-[11px] uppercase tracking-widest mb-3">
-            Your journey starts here
-          </p>
           <div className="flex gap-3">
             {[
               { name: "Tech_Teen", color: "primary", icon: Brain },
@@ -154,7 +151,7 @@ const LoginPage = () => {
 
           {/* Email input */}
           <div className="mb-4">
-            <label className="block text-muted-foreground text-[12px] uppercase tracking-[0.1em] mb-2 font-medium">
+            <label className="block text-muted-foreground/60 text-[11px] uppercase tracking-[0.1em] mb-2 font-medium">
               Username or Email
             </label>
             <div className="relative">
@@ -171,7 +168,7 @@ const LoginPage = () => {
 
           {/* Password input */}
           <div className="mb-4">
-            <label className="block text-muted-foreground text-[12px] uppercase tracking-[0.1em] mb-2 font-medium">
+            <label className="block text-muted-foreground/60 text-[11px] uppercase tracking-[0.1em] mb-2 font-medium">
               Password
             </label>
             <div className="relative">
@@ -213,13 +210,13 @@ const LoginPage = () => {
               </button>
               <span className="text-muted-foreground text-xs">Remember me</span>
             </label>
-            <a href="#" className="text-secondary text-xs hover:underline transition-all">
+            <a href="#" className="text-primary text-xs hover:underline transition-all">
               Forgot Password?
             </a>
           </div>
 
           {/* Login button */}
-          <button className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-primary-foreground bg-gradient-to-r from-primary to-[hsl(263,68%,42%)] hover:from-[hsl(263,70%,62%)] hover:to-primary hover:shadow-[0_0_24px_rgba(124,58,237,0.4)] active:scale-[0.98] transition-all text-base">
+          <button className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white bg-primary hover:brightness-110 hover:shadow-[0_0_24px_rgba(124,58,237,0.5)] active:scale-[0.98] transition-all text-base">
             <Zap className="w-5 h-5" />
             Login to Velura AI
           </button>
@@ -232,7 +229,7 @@ const LoginPage = () => {
           </div>
 
           {/* Google button */}
-          <button className="w-full flex items-center justify-center gap-3 py-3.5 rounded-xl bg-input-bg border border-surface-border text-foreground font-medium text-sm hover:border-foreground/30 active:scale-[0.98] transition-all">
+          <button className="w-full flex items-center justify-center gap-3 py-3.5 rounded-xl bg-white text-gray-900 font-medium text-sm hover:bg-gray-100 active:scale-[0.98] transition-all">
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
