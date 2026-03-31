@@ -110,9 +110,6 @@ const LoginPage = () => {
 
         {/* Badge showcase */}
         <div className="relative z-10 mb-6 sm:mb-8 flex flex-col items-center">
-          <p className="text-muted-foreground text-[11px] uppercase tracking-widest mb-3">
-            Your journey starts here
-          </p>
           <div className="flex gap-3">
             {[
               { name: "Tech_Teen", color: "primary", icon: Brain },
