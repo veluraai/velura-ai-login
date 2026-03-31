@@ -151,7 +151,7 @@ const LoginPage = () => {
 
           {/* Email input */}
           <div className="mb-4">
-            <label className="block text-muted-foreground text-[12px] uppercase tracking-[0.1em] mb-2 font-medium">
+            <label className="block text-muted-foreground/60 text-[11px] uppercase tracking-[0.1em] mb-2 font-medium">
               Username or Email
             </label>
             <div className="relative">
