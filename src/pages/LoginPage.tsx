@@ -216,7 +216,7 @@ const LoginPage = () => {
           </div>
 
           {/* Login button */}
-          <button className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-primary-foreground bg-gradient-to-r from-primary to-[hsl(263,68%,42%)] hover:from-[hsl(263,70%,62%)] hover:to-primary hover:shadow-[0_0_24px_rgba(124,58,237,0.4)] active:scale-[0.98] transition-all text-base">
+          <button className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white bg-primary hover:brightness-110 hover:shadow-[0_0_24px_rgba(124,58,237,0.5)] active:scale-[0.98] transition-all text-base">
             <Zap className="w-5 h-5" />
             Login to Velura AI
           </button>
