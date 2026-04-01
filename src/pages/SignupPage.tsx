@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { User, Lock, Eye, EyeOff, Zap, Shield, Flame, Brain, Award, Crown } from "lucide-react";
+import { User, Lock, Eye, EyeOff, Zap, Mail, Brain, Flame, Crown } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const LoginPage = () => {
+const SignupPage = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(false);
 
   return (
     <>
@@ -57,10 +60,8 @@ const LoginPage = () => {
       `}</style>
 
       <div className="relative min-h-screen bg-background overflow-hidden flex flex-col items-center justify-start px-4 py-8 sm:justify-center sm:py-0">
-        {/* Grid background */}
         <div className="grid-bg absolute inset-0 pointer-events-none" />
 
-        {/* Particles */}
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
@@ -79,29 +80,14 @@ const LoginPage = () => {
 
         {/* Hero / Branding */}
         <div className="relative z-10 flex flex-col items-center mb-6 sm:mb-8">
-          {/* Logo hexagon */}
           <div className="logo-hex relative w-16 h-16 mb-4 flex items-center justify-center">
             <svg viewBox="0 0 64 64" className="absolute inset-0 w-full h-full">
-              <polygon
-                points="32,2 58,17 58,47 32,62 6,47 6,17"
-                fill="none"
-                stroke="hsl(var(--primary))"
-                strokeWidth="2"
-                className="drop-shadow-lg"
-              />
-              <polygon
-                points="32,2 58,17 58,47 32,62 6,47 6,17"
-                fill="hsl(var(--primary))"
-                opacity="0.15"
-              />
+              <polygon points="32,2 58,17 58,47 32,62 6,47 6,17" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" className="drop-shadow-lg" />
+              <polygon points="32,2 58,17 58,47 32,62 6,47 6,17" fill="hsl(var(--primary))" opacity="0.15" />
             </svg>
             <Zap className="relative z-10 w-7 h-7 text-primary" />
           </div>
-
-          <h1
-            className="text-[32px] font-bold text-foreground"
-            style={{ textShadow: "0 0 30px rgba(124,58,237,0.5)" }}
-          >
+          <h1 className="text-[32px] font-bold text-foreground" style={{ textShadow: "0 0 30px rgba(124,58,237,0.5)" }}>
             Velura AI
           </h1>
           <p className="text-secondary text-[13px] uppercase tracking-[0.2em] mt-1 font-medium">
@@ -134,7 +120,7 @@ const LoginPage = () => {
           </div>
         </div>
 
-        {/* Login Card */}
+        {/* Signup Card */}
         <div
           className="card-animate relative z-10 w-full max-w-[420px] rounded-[20px] px-6 py-8 sm:px-8 sm:py-9"
           style={{
@@ -144,30 +130,47 @@ const LoginPage = () => {
           }}
         >
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-foreground">Welcome Back</h2>
+            <h2 className="text-2xl font-bold text-foreground">Create Account</h2>
             <p className="text-muted-foreground text-sm mt-1">
-              Ready for today's duel? ⚡
+              Start your journey today 🚀
             </p>
           </div>
 
-          {/* Email input */}
+          {/* Username */}
           <div className="mb-4">
             <label className="block text-muted-foreground/60 text-[11px] uppercase tracking-[0.1em] mb-2 font-medium">
-              Username or Email
+              Username
             </label>
             <div className="relative">
               <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
               <input
                 type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your username or email"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Choose a username"
                 className="w-full bg-input-bg border border-surface-border rounded-xl py-3.5 pl-11 pr-4 text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all focus:border-primary focus:shadow-[0_0_12px_rgba(124,58,237,0.3)]"
               />
             </div>
           </div>
 
-          {/* Password input */}
+          {/* Email */}
+          <div className="mb-4">
+            <label className="block text-muted-foreground/60 text-[11px] uppercase tracking-[0.1em] mb-2 font-medium">
+              Email Address
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="w-full bg-input-bg border border-surface-border rounded-xl py-3.5 pl-11 pr-4 text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all focus:border-primary focus:shadow-[0_0_12px_rgba(124,58,237,0.3)]"
+              />
+            </div>
+          </div>
+
+          {/* Password */}
           <div className="mb-4">
             <label className="block text-muted-foreground/60 text-[11px] uppercase tracking-[0.1em] mb-2 font-medium">
               Password
@@ -178,48 +181,62 @@ const LoginPage = () => {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder="Create a password"
                 className="w-full bg-input-bg border border-surface-border rounded-xl py-3.5 pl-11 pr-12 text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all focus:border-primary focus:shadow-[0_0_12px_rgba(124,58,237,0.3)]"
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-              >
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
           </div>
 
-          {/* Remember + Forgot */}
-          <div className="flex items-center justify-between mb-6">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <button
-                type="button"
-                onClick={() => setRememberMe(!rememberMe)}
-                className={`w-4 h-4 rounded border transition-all flex items-center justify-center ${
-                  rememberMe
-                    ? "bg-primary border-primary"
-                    : "border-surface-border bg-transparent"
-                }`}
-              >
-                {rememberMe && (
-                  <svg className="w-3 h-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </button>
-              <span className="text-muted-foreground text-xs">Remember me</span>
+          {/* Confirm Password */}
+          <div className="mb-4">
+            <label className="block text-muted-foreground/60 text-[11px] uppercase tracking-[0.1em] mb-2 font-medium">
+              Confirm Password
             </label>
-            <Link to="/forgot-password" className="text-primary text-xs hover:underline transition-all">
-              Forgot Password?
-            </Link>
+            <div className="relative">
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm your password"
+                className="w-full bg-input-bg border border-surface-border rounded-xl py-3.5 pl-11 pr-12 text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all focus:border-primary focus:shadow-[0_0_12px_rgba(124,58,237,0.3)]"
+              />
+              <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+                {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
           </div>
 
-          {/* Login button */}
+          {/* Terms */}
+          <div className="flex items-start gap-2 mb-6">
+            <button
+              type="button"
+              onClick={() => setAgreeTerms(!agreeTerms)}
+              className={`mt-0.5 w-4 h-4 rounded border transition-all flex items-center justify-center shrink-0 ${
+                agreeTerms ? "bg-primary border-primary" : "border-surface-border bg-transparent"
+              }`}
+            >
+              {agreeTerms && (
+                <svg className="w-3 h-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              )}
+            </button>
+            <span className="text-muted-foreground text-xs leading-relaxed">
+              I agree to the{" "}
+              <a href="#" className="text-primary hover:underline">Terms of Service</a>{" "}
+              and{" "}
+              <a href="#" className="text-primary hover:underline">Privacy Policy</a>
+            </span>
+          </div>
+
+          {/* Signup button */}
           <button className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white bg-primary hover:brightness-110 hover:shadow-[0_0_24px_rgba(124,58,237,0.5)] active:scale-[0.98] transition-all text-base">
             <Zap className="w-5 h-5" />
-            Login to Velura AI
+            Create Account
           </button>
 
           {/* Divider */}
@@ -241,16 +258,13 @@ const LoginPage = () => {
           </button>
         </div>
 
-        {/* Signup redirect */}
+        {/* Login redirect */}
         <div className="relative z-10 mt-6 text-center">
           <p className="text-muted-foreground text-sm">
-            New to Velura AI?{" "}
-            <Link to="/signup" className="text-primary font-bold hover:underline">
-              Create Account
+            Already have an account?{" "}
+            <Link to="/" className="text-primary font-bold hover:underline">
+              Login
             </Link>
-          </p>
-          <p className="text-muted-foreground/60 text-[11px] mt-1.5">
-            Join 10,000+ students already dueling
           </p>
         </div>
 
@@ -270,4 +284,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;
