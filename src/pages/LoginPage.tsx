@@ -211,9 +211,9 @@ const LoginPage = () => {
               </button>
               <span className="text-muted-foreground text-xs">Remember me</span>
             </label>
-            <a href="#" className="text-primary text-xs hover:underline transition-all">
+            <Link to="/forgot-password" className="text-primary text-xs hover:underline transition-all">
               Forgot Password?
-            </a>
+            </Link>
           </div>
 
           {/* Login button */}
