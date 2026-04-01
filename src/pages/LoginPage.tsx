@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { User, Lock, Eye, EyeOff, Zap, Shield, Flame, Brain, Award, Crown } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
