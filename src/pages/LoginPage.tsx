@@ -1,12 +1,20 @@
 import { useState } from "react";
-import { User, Lock, Eye, EyeOff, Zap, Shield, Flame, Brain, Award, Crown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { User, Lock, Eye, EyeOff, Zap, Shield, Flame, Brain, Award, Crown, UserCircle } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const { loginAsGuest } = useAuth();
+  const navigate = useNavigate();
+
+  const handleGuestLogin = () => {
+    loginAsGuest();
+    navigate("/dashboard");
+  };
 
   return (
     <>
@@ -238,6 +246,15 @@ const LoginPage = () => {
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
             Continue with Google
+          </button>
+
+          {/* Guest button */}
+          <button
+            onClick={handleGuestLogin}
+            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl border border-border text-muted-foreground font-medium text-sm hover:text-foreground hover:border-foreground/20 active:scale-[0.98] transition-all mt-3"
+          >
+            <UserCircle className="w-4 h-4" />
+            Continue as Guest
           </button>
         </div>
 
