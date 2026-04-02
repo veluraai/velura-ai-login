@@ -2,10 +2,15 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const GuestBanner = () => {
-  const { isGuest } = useAuth();
+  const { isGuest, logout } = useAuth();
   const navigate = useNavigate();
 
   if (!isGuest) return null;
+
+  const handleSignup = () => {
+    logout();
+    navigate("/signup");
+  };
 
   return (
     <div className="px-5 pt-2 pb-1">
@@ -14,11 +19,7 @@ const GuestBanner = () => {
           You're in Guest mode. Progress won't be saved.
         </p>
         <button
-          onClick={() => { 
-            const { logout } = useAuth();
-            logout();
-            navigate("/signup");
-          }}
+          onClick={handleSignup}
           className="text-xs font-bold text-primary ml-3 whitespace-nowrap"
         >
           Create Free Account →

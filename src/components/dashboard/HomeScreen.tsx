@@ -1,5 +1,6 @@
-import { Flame, Trophy, Award, ChevronRight, Zap } from "lucide-react";
-import { useState, useRef } from "react";
+import { Flame, ChevronRight, Zap, Bell, Search } from "lucide-react";
+import { useRef } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const subjects = [
   { name: "Maths", topic: "Quadratic Equations", progress: 65 },
@@ -9,20 +10,44 @@ const subjects = [
 ];
 
 const leaderboard = [
-  { rank: 1, name: "Priya_S", xp: "3,200 XP", initials: "PS" },
-  { rank: 2, name: "Rohan_K", xp: "2,980 XP", initials: "RK" },
-  { rank: 3, name: "Ankur_V", xp: "2,450 XP", initials: "AV", isUser: true },
+  { rank: 1, name: "Priya_S", xp: "3,200 XP", initials: "PS", badge: "Tech_Burner" },
+  { rank: 2, name: "Rohan_K", xp: "2,980 XP", initials: "RK", badge: "Tech_Teen" },
+  { rank: 3, name: "Ankur_V", xp: "2,450 XP", initials: "AV", isUser: true, badge: "Tech_Burner" },
 ];
 
-const HomeScreen = () => {
+interface HomeScreenProps {
+  onNotifications: () => void;
+  onSearch: () => void;
+  onUserTap: (user: { name: string; initials: string; badge: string; xp: string }) => void;
+}
+
+const HomeScreen = ({ onNotifications, onSearch, onUserTap }: HomeScreenProps) => {
+  const { username, xp, streak, badge, isGuest } = useAuth();
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const displayLeaderboard = isGuest
+    ? leaderboard.filter((u) => !u.isUser)
+    : leaderboard;
 
   return (
     <div className="px-5 pb-8 space-y-6">
-      {/* Greeting */}
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Hey, Ankur 👋</h1>
-        <p className="text-sm text-muted-foreground mt-1">You're on a 5-day streak 🔥</p>
+      {/* Top bar */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Hey, {username.split(" ")[0]} 👋</h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            {streak > 0 ? `You're on a ${streak}-day streak 🔥` : "Start your learning streak today!"}
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <button onClick={onSearch} className="flex h-9 w-9 items-center justify-center rounded-xl bg-card border border-border text-muted-foreground">
+            <Search className="h-4 w-4" />
+          </button>
+          <button onClick={onNotifications} className="flex h-9 w-9 items-center justify-center rounded-xl bg-card border border-border text-muted-foreground relative">
+            <Bell className="h-4 w-4" />
+            <div className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-primary" />
+          </button>
+        </div>
       </div>
 
       {/* Streak Card */}
@@ -31,7 +56,7 @@ const HomeScreen = () => {
           <Flame className="h-6 w-6 text-primary" />
         </div>
         <div>
-          <p className="text-2xl font-bold text-primary">5 days</p>
+          <p className="text-2xl font-bold text-primary">{streak} days</p>
           <p className="text-xs text-muted-foreground">Current streak</p>
         </div>
       </div>
@@ -39,15 +64,15 @@ const HomeScreen = () => {
       {/* Stats Row */}
       <div className="grid grid-cols-3 gap-3">
         <div className="rounded-2xl border border-border bg-card p-3 text-center">
-          <p className="text-lg font-bold text-foreground">2,450</p>
+          <p className="text-lg font-bold text-foreground">{xp.toLocaleString()}</p>
           <p className="text-[10px] text-muted-foreground uppercase tracking-wider">XP</p>
         </div>
         <div className="rounded-2xl border border-border bg-card p-3 text-center">
-          <p className="text-sm font-bold text-primary">Tech_Burner</p>
+          <p className="text-sm font-bold text-primary">{badge}</p>
           <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Badge</p>
         </div>
         <div className="rounded-2xl border border-border bg-card p-3 text-center">
-          <p className="text-lg font-bold text-foreground">#14</p>
+          <p className="text-lg font-bold text-foreground">{isGuest ? "—" : "#14"}</p>
           <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Rank</p>
         </div>
       </div>
@@ -57,23 +82,17 @@ const HomeScreen = () => {
         <h2 className="text-base font-bold text-foreground mb-3">Continue Learning</h2>
         <div
           ref={scrollRef}
-          className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-hide"
+          className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {subjects.map((s) => (
-            <div
-              key={s.name}
-              className="min-w-[140px] rounded-2xl border border-border bg-card p-4 flex-shrink-0"
-            >
+            <div key={s.name} className="min-w-[140px] rounded-2xl border border-border bg-card p-4 flex-shrink-0">
               <p className="text-sm font-bold text-foreground">{s.name}</p>
               <p className="text-[11px] text-muted-foreground mt-1">{s.topic}</p>
               <div className="mt-3 h-1.5 w-full rounded-full bg-border overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-primary transition-all"
-                  style={{ width: `${s.progress}%` }}
-                />
+                <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${isGuest ? 0 : s.progress}%` }} />
               </div>
-              <p className="text-[10px] text-muted-foreground mt-1">{s.progress}%</p>
+              <p className="text-[10px] text-muted-foreground mt-1">{isGuest ? "0" : s.progress}%</p>
             </div>
           ))}
         </div>
@@ -97,10 +116,11 @@ const HomeScreen = () => {
           </button>
         </div>
         <div className="rounded-2xl border border-border bg-card divide-y divide-border">
-          {leaderboard.map((u) => (
-            <div
+          {displayLeaderboard.map((u) => (
+            <button
               key={u.rank}
-              className={`flex items-center gap-3 px-4 py-3 ${u.isUser ? "bg-primary/5" : ""}`}
+              onClick={() => !u.isUser && onUserTap({ name: u.name, initials: u.initials, badge: u.badge, xp: u.xp })}
+              className={`flex items-center gap-3 px-4 py-3 w-full text-left ${u.isUser ? "bg-primary/5" : ""}`}
             >
               <span className="text-sm font-bold text-muted-foreground w-5">#{u.rank}</span>
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-border text-xs font-bold text-foreground">
@@ -110,7 +130,7 @@ const HomeScreen = () => {
                 {u.name}
               </p>
               <p className="text-xs text-muted-foreground">{u.xp}</p>
-            </div>
+            </button>
           ))}
         </div>
       </div>
