@@ -247,6 +247,15 @@ const LoginPage = () => {
             </svg>
             Continue with Google
           </button>
+
+          {/* Guest button */}
+          <button
+            onClick={handleGuestLogin}
+            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl border border-border text-muted-foreground font-medium text-sm hover:text-foreground hover:border-foreground/20 active:scale-[0.98] transition-all mt-3"
+          >
+            <UserCircle className="w-4 h-4" />
+            Continue as Guest
+          </button>
         </div>
 
         {/* Signup redirect */}
